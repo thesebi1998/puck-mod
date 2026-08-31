@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>AiDefenderMod</AssemblyName>
+    <RootNamespace>MyPuckMod</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    KEIN explizites <Compile Include="..."/> mehr noetig: das SDK-Style-Projekt
+    nimmt automatisch alle .cs-Dateien im Projektordner auf (AiDefenderMod.cs,
+    PoacherBotBrain.cs). Ein zusaetzliches manuelles Include fuehrte zu
+    NETSDK1022 (Duplicate 'Compile' items).
+  -->
+
+  <!--
+    Kompletter Managed-Ordner von Puck wird referenziert (empfohlen in der
+    offiziellen Puck-Modding-Doku: puck.gitbook.io/modding).
+    Private=false sorgt dafuer, dass diese DLLs NICHT mit in dein bin/-Output
+    kopiert werden - am Ende landet dort nur deine eigene AiDefenderMod.dll.
+  -->
+  <ItemGroup>
+    <Libs Include="libs\*.dll" />
+    <Reference Include="@(Libs -> '%(Filename)')">
+      <HintPath>%(Libs.FullPath)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
